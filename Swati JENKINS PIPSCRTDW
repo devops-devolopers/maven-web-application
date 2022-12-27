@@ -34,6 +34,18 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKe
 
 def mavenHome = tool name: 'maven3.8.5'
 
+try{
+
+}//Try Closing
+  catch(e){
+  cureentBuild.result = "FAILED"
+  }
+  finally{
+
+sendSlackNotifications(currentBuild.result)
+}
+
+}//Node Closing
 
 //Get the code from Github Repo
 stage('CheckoutCode'){
