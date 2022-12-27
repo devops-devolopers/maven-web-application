@@ -34,18 +34,6 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKe
 
 def mavenHome = tool name: 'maven3.8.5'
 
-try{
-
-}//Try Closing
-  catch(e){
-  cureentBuild.result = "FAILED"
-  }
-  finally{
-
-sendSlackNotifications(currentBuild.result)
-}
-
-}//Node Closing
 
 //Get the code from Github Repo
 stage('CheckoutCode'){
@@ -58,6 +46,7 @@ stage('Build'){
 sh "${mavenHome}/bin/mvn clean package"
 }
 
+/*
 //Execute the SonarQube Report
 stage('ExecuteSonarQubeReport'){
 sh "${mavenHome}/bin/mvn sonar:sonar"
@@ -75,5 +64,23 @@ sshagent(['c9de689e-5e82-43da-9bc0-66fce725535e']) {
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@35.154.33.239:/opt/apache-tomcat-9.0.70/webapps" 
 }
 }
+*/
+try{
+}//Try Closing
+  catch(e){
+  cureentBuild.result = "FAILED"
+  }
+  finally{
+
+sendSlackNotifications(currentBuild.result)
+}
+
+}//Node Closing
+
+
 
 }
+
+
+
+
